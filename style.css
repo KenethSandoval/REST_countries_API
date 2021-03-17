@@ -33,6 +33,14 @@ body {
   cursor: pointer;
 }
 
+.card {
+  margin-bottom: 15px;
+}
+
 header .dark_mode {
   float: right;
+}
+
+img {
+  width: 20px;
 }

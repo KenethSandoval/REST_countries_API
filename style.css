@@ -1,6 +1,6 @@
 * { 
   margin: 0;
-  padding: 0;
+  font-family: sans-serif;
 }
 
 body {
@@ -33,8 +33,18 @@ body {
   cursor: pointer;
 }
 
+/*GRID*/
+.container {
+  display: grid;
+  grid-column-gap: 1px;
+  grid-row-gap: 15px;
+  grid-template-columns: auto auto auto auto;
+  padding: 10px;
+}
+
 .card {
-  margin-bottom: 15px;
+  background-color: rgba(255, 255, 245, 0.8);
+  padding: 15px;
 }
 
 header .dark_mode {
@@ -42,5 +52,33 @@ header .dark_mode {
 }
 
 img {
-  width: 20px;
+  width: 100%;
+  height: 187px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  cursor: pointer;
+}
+
+img:hover {
+  transform: scale(1);
+}
+
+p {
+  margin: 10px;
+}
+
+b {
+  font-weight: 500;
+}
+
+.card .title {
+  margin:19px 0 19px 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/*DARK MODE*/
+.dark-mode {
+  background: #212e37; 
 }

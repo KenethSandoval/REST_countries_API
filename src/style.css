@@ -1,0 +1,129 @@
+* { 
+  margin: 0;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: #fafafa;
+}
+
+header {
+  padding: 20px;
+  box-shadow: 0 4px 6px -6px #222;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h2 {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.button-mode {
+  border: none;
+  cursor: pointer;
+}
+
+.button-mode > i {
+  margin: 10px;
+}
+
+.topnav {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topnav input[type="text"] {
+  padding: 6px;
+  margin-top: 15px;
+  font-size: 17px;
+  border: none;
+}
+
+.search_container > i {
+  color: #999999;
+}
+
+/*GRID*/
+.container {
+  display: grid;
+  grid-column-gap: 1px;
+  grid-row-gap: 15px;
+  grid-template-columns: auto auto auto auto;
+  padding: 10px;
+}
+
+.card {
+  background-color: rgba(255, 255, 245, 0.8);
+  padding: 15px;
+}
+
+img {
+  width: 100%;
+  height: 187px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  cursor: pointer;
+}
+
+img:hover {
+  transform: scale(1);
+}
+
+p {
+  margin: 10px;
+}
+
+b {
+  font-weight: 500;
+}
+
+.card .title {
+  margin:19px 0 19px 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/*DARK MODE*/
+.dark-mode {
+  background-color: #212e37; 
+  color: #efefef;
+}
+
+.header-dark {
+  background-color: #2b3743;
+}
+
+.button-dark {
+  background-color: #2b3743;
+  color: #efefef;
+}
+
+.card-dark {
+  background-color: #212e37; 
+}
+
+/*MODAL*/
+
+.background-modal {
+  box-sizing: border-box;
+  width: 100%;
+  height: 150%;
+  background-color: rgba(0,0,0, .5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none; 
+  opacity: 0;
+}
+
+.modal {
+  background-color: #fff;
+  width: 500px;
+  margin: auto;
+  text-align: center;
+}

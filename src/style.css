@@ -127,3 +127,25 @@ b {
   margin: auto;
   text-align: center;
 }
+
+.modal > button {
+  margin-left: 25rem;
+  margin-top: 1rem;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal > button > i {
+  margin-right: 4px;
+}
+
+@keyframes aparecer {
+  0% {
+    opacity: 0;
+    display: flex;
+  }
+  100% {
+    opacity: 1;
+  }
+}

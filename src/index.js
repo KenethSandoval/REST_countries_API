@@ -4,69 +4,72 @@ window.addEventListener("load", async () => {
   const search_input = document.getElementById("search_input");
   const header = document.getElementById("header");
   const modal = document.getElementById("modal");
+  let button = document.querySelector(".close");
   const buttonDark = document.querySelector(".button-mode");
   const backgroundModal = document.querySelector(".background-modal");
-  const endpoint = "https://restcountries.eu/rest/v2" 
+  const endpoint = "https://restcountries.eu/rest/v2";
+  let response = [];
 
-  class AllRequest {
-    async withCountriesAPI(url) {
-      let reqFetch = await fetch(url);
-      let resFetch=  reqFetch.json()   
-      return resFetch;
-    }
+  //Si uso clases debo usar funcionas como tal
+  const withCountriesAPI = async (url) => {
+    let reqFetch = await fetch(url);
+    let resFetch = reqFetch.json();
+    return resFetch;
+  };
 
-    withCreateHTML(res) {
-      res.forEach((element) => {
-        countries.innerHTML += 
-        `<div class="card">
+  const withCreateHTML = (res) => {
+    res.forEach((element) => {
+      countries.innerHTML += `<div class="card">
            <img src=${element.flag} alt="logo" class="img-header"/>
           <p class="title">${element.name}</p>
-          <p><b>Population: </b>${new Intl.NumberFormat("de-DE").format(element.population)}</p>
+          <p><b>Population: </b>${new Intl.NumberFormat("de-DE").format(
+            element.population
+          )}</p>
           <p><b>Region: </b>${element.region}</p>
           <p><b>Capital: </b>${element.capital}</p> 
-        </div>`
-      }); 
-    }
-  
-    withOpenModal(result, res, index) {
-      result.addEventListener("click", () => {
-        backgroundModal.style.display = "flex";
-        backgroundModal.style.opacity = 1;
-        modal.innerHTML +=
-        `<div class="card">
-           <img src=${res[index].flag} alt="logo" class="img-header"/>
-          <p class="title">${res[index].name}</p>
-          <p><b>Population: </b>${new Intl.NumberFormat("de-DE").format(res[index].population)}</p>
-          <p><b>Region: </b>${res[index].region}</p>
-          <p><b>Capital: </b>${res[index].capital}</p> 
-        </div>`
-      });
-    }
-  }
+        </div>`;
+    });
+  };
 
-  //instancia de la clase que realiza las peticiones
-  let r = new AllRequest();
+  const withOpenModal = (result, res, index) => {
+    result.addEventListener("click", () => {
+      backgroundModal.style.display = "flex";
+      backgroundModal.style.opacity = 1;
+      backgroundModal.style.animation = "aparecer 1s forwards";
+      modal.innerHTML += `<div class="card">
+        <img src=${res[index].flag} alt="logo" class="img-header"/>
+        <p class="title">${res[index].name}</p>
+        <p><b>Population: </b>${new Intl.NumberFormat("de-DE").format(
+          res[index].population
+        )}</p>
+        <p><b>Region: </b>${res[index].region}</p>
+        <p><b>Capital: </b>${res[index].capital}</p> 
+      </div>`;
+    });
+  };
 
-  //TODO: hacer paginacion
-  //url para el metodo de la clase
-  let url = `${endpoint}/all`;
-  //respuesta de la api
-  let res = await r.withCountriesAPI(url);
-  r.withCreateHTML(res);
-  let images = document.querySelectorAll(".img-header");
-  images.forEach((imgElement, index) => {
-    r.withOpenModal(imgElement, res, index);
-  });
+  const getCountries = async () => {
+    //respuesta de la api
+    response = await withCountriesAPI(`${endpoint}/all`);
+    withCreateHTML(response);
+    let images = document.querySelectorAll(".img-header");
+    images.forEach((imgElement, index) => {
+      withOpenModal(imgElement, response, index);
+    });
+  };
 
-  countries_search.addEventListener("change", async function() {
+  //Funciones
+  getCountries();
+
+  //Eventos
+  countries_search.addEventListener("change", async function () {
     countries.innerHTML = "";
     //obtiene el value de la etiqueta select
     let selectOption = this.options[countries_search.selectedIndex];
-    //url para el metodo de la clase
-    let url = `${endpoint}/region/${selectOption.value}`;
-  
-    let res = await r.withCountriesAPI(url);
-    r.withCreateHTML(res);
+    response = await withCountriesAPI(
+      `${endpoint}/region/${selectOption.value}`
+    );
+    withCreateHTML(response);
   });
 
   search_input.addEventListener("keyup", async () => {
@@ -74,34 +77,31 @@ window.addEventListener("load", async () => {
     if (search_input.value === "") {
       return;
     }
-    let url = `${endpoint}/name/${search_input.value}`;
-    let res = await r.withCountriesAPI(url);
+    let response = await withCountriesAPI(
+      `${endpoint}/name/${search_input.value}`
+    );
     countries.innerHTML = "";
-    r.withCreateHTML(res)
+    withCreateHTML(response);
   });
 
-  let card = document.querySelectorAll(".card");
-  if (localStorage.getItem('mode')) {
-    document.body.classList.add(localStorage.getItem('mode'));
-    header.classList.add('header-dark');
-    buttonDark.classList.add('button-dark');
+  if (localStorage.getItem("mode")) {
+    document.body.classList.add(localStorage.getItem("mode"));
+    header.classList.add("header-dark");
+    buttonDark.classList.add("button-dark");
   }
 
-  //TODO: detaller para el dark mode
   buttonDark.addEventListener("click", () => {
     let element = document.body;
-    console.log(card);
-    if (element.classList.contains('dark-mode')) {
-      element.classList.remove('dark-mode');
-      header.classList.remove('header-dark');
-      buttonDark.classList.remove('button-dark');
-      localStorage.removeItem('mode');
+    if (element.classList.contains("dark-mode")) {
+      element.classList.remove("dark-mode");
+      header.classList.remove("header-dark");
+      buttonDark.classList.remove("button-dark");
+      localStorage.removeItem("mode");
     } else {
-      localStorage.setItem('mode', 'dark-mode');
-      element.classList.add(localStorage.getItem('mode'));
-      header.classList.add('header-dark');
-      buttonDark.classList.add('button-dark');
-      card.classList.add('card-dark');
+      localStorage.setItem("mode", "dark-mode");
+      element.classList.add(localStorage.getItem("mode"));
+      header.classList.add("header-dark");
+      buttonDark.classList.add("button-dark");
     }
   });
 });
